@@ -129,7 +129,20 @@ Para visualizar o(s) ReplicaSets criado execute:
 kubectl get replicasets
 ```
 
+kubectl delete replicaset goserver-replicaset
+
+## Deployment
+
+Um **Deployment** fornece atualizações declarativas para os **Pods** e os **ReplicaSets**, isto é, ao atualizar um arquivo de configuração de **Deployment** o kubertentes cria um novo **ReplicaSet** e aos poucos vai derrubando os os **Pods** do **ReplicaSet** antigo e criando novas **Pods** com o novo **ReplicaSet**, gerando assim **zero downtime** (a aplicação não fica fora do ar). Abaixo o comando que aplicado as configurações do arquivo (k8s/kube-deployment.yaml)[k8s/kube-deployment.yaml].
+
+```sh
+# Sendo "k8s/kube-deployment.yaml" o caminho do arquivo
+kubectl apply -f k8s/kube-deployment.yaml
+```
+
 # Informações que podem ser utilizadas
+
+Deployment > ReplicaSet > Pod
 
 Borg > Omega > Kubernetes (Antecessores do kubernetes - Pesquisar depois por curiosidade)
 kubectl describe pod <nome-pod>
