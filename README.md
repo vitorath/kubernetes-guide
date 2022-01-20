@@ -30,6 +30,26 @@ Uma boa prática é manter um **pod** por **node**, contudo, pode existir situa�
 
 [Kind](https://kind.sigs.k8s.io/docs/user/quick-start) é uma ferramenta que executa localmente clusters de Kubernetes usando "nodes" containers Docker. Contudo, para ter acesso aos clusters que são gerandos pelo **kind** é mais conveniente utilizar o [kubectl](https://kubernetes.io/docs/tasks/tools/) que é client do kuberntes que se comunica com o servidor do kubernetes.
 
+## Criando clusters com o Kind
+
+Iniciar o processo de instalação de um cluster com um único **node**
+
+```sh
+kind create cluster
+```
+
+Após criar o cluster é necessário conectar nele, ou seja, indicar qual o contexto da conexão. No Linux, as credenciais de conexão do **kubectl** podem ser encontrada neste caminho **~/.kube/config**, lembrando que esta pasta somente irá existir a partir do momento que houver um conexão de um cluster configurada. Agora para efetuar o acesso ao cluster digite:
+
+```sh
+kubectl cluster-info --context kind-kind
+```
+
+Para verificamos se estamos conectados o comando abaixo deve retornar um ou mais nodes
+
+```sh
+kubectl get nodes
+```
+
 # Informações que podem ser utilizadas
 
 Borg > Omega > Kubernetes (Antecessores do kubernetes - Pesquisar depois por curiosidade)
