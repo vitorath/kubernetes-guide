@@ -1,0 +1,13 @@
+# documentação - https://kind.sigs.k8s.io/docs/user/configuration/
+kind: Cluster
+apiVersion: kind.x-k8s.io/v1alpha4
+name: fullcycle
+
+nodes:
+# role consiste na função que o node vai exercer, 
+# para cada role será criado um node
+# a especificação control-plane indica que este node será um o master do kuberntes
+- role: control-plane 
+- role: worker
+- role: worker
+- role: worker

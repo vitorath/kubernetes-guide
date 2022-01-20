@@ -32,10 +32,16 @@ Uma boa prática é manter um **pod** por **node**, contudo, pode existir situa�
 
 ## Criando clusters com o Kind
 
-Iniciar o processo de instalação de um cluster com um único **node**
+Para criar um cluster com um único **node** utilizando o kind execute o comando:
 
 ```sh
 kind create cluster
+```
+
+Contudo, existe outra forma de criar clusters no kind por meio de um arquivos de configuração, neste caso [k8s/kind-config.yaml](./k8s/kind-config.yaml)
+
+```sh
+kind create cluster --config=k8s/kind-config.yaml
 ```
 
 Após criar o cluster é necessário conectar nele, ou seja, indicar qual o contexto da conexão. No Linux, as credenciais de conexão do **kubectl** podem ser encontrada neste caminho **~/.kube/config**, lembrando que esta pasta somente irá existir a partir do momento que houver um conexão de um cluster configurada. Agora para efetuar o acesso ao cluster digite:
@@ -48,6 +54,13 @@ Para verificamos se estamos conectados o comando abaixo deve retornar um ou mais
 
 ```sh
 kubectl get nodes
+```
+
+Contudo caso, sejá necessário deletar um cluster do kind devemos saber qual o nome do cluster (por padrão, caso não tenha especificado o nome é kind) e posteriormente executar o comando de delete
+
+```sh
+kind get clusters # Lista todos os clusters criados pelo kind
+kind delete clusters kind # Deleta o cluster com o nome "kind"
 ```
 
 # Informações que podem ser utilizadas
