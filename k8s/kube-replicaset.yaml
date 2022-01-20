@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: ReplicaSet
+metadata:
+  name: goserver-replicaset
+  labels:
+    app: goserver-replicaset-label
+spec:
+  # Seleciona as labels dos pods
+  selector:
+    matchLabels:
+      app: goserver-pod-label
+  replicas: 2
+  # Especificação de um Pod
+  template:
+    metadata:
+      name: "goserver"
+      labels:
+        app: "goserver-pod-label"
+    spec:
+      containers:
+        - name: goserver-container
+          image: "vitorat/hello-go:latest"
