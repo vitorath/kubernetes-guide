@@ -114,7 +114,9 @@ kubectl port-forward pod/goserver 8000:80
 
 ## ReplicaSet
 
-**ReplicaSet** gerencia os **pods** mantendo em execução o número especificado de replicas. O arquivo (k8s/kube-replicaset)[./k8s/kube-replicaset/] é um exemplo de ReplicaSet e para executa-lo utilize o apply, similar ao pod.
+**ReplicaSet** gerencia os **pods** mantendo em execução o número especificado de replicas. Contudo, quando a versão do **pod** é atualizada o **ReplicaSet não recria os pods automaticamenteo**, ou seja, somente novos pods estarão com a versão mais atualizada da aplicação.
+
+O arquivo (k8s/kube-replicaset)[./k8s/kube-replicaset/] é um exemplo de ReplicaSet e para executa-lo utilize o **apply**, similar ao pod.
 
 ```sh
 # Sendo "k8s/kube-replicaset.yaml" o caminho do arquivo de configuração
@@ -130,6 +132,7 @@ kubectl get replicasets
 # Informações que podem ser utilizadas
 
 Borg > Omega > Kubernetes (Antecessores do kubernetes - Pesquisar depois por curiosidade)
+kubectl describe pod <nome-pod>
 
 ## Referências
 
