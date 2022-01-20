@@ -44,10 +44,24 @@ Contudo, existe outra forma de criar clusters no kind por meio de um arquivos de
 kind create cluster --config=k8s/kind-config.yaml
 ```
 
-Após criar o cluster é necessário conectar nele, ou seja, indicar qual o contexto da conexão. No Linux, as credenciais de conexão do **kubectl** podem ser encontrada neste caminho **~/.kube/config**, lembrando que esta pasta somente irá existir a partir do momento que houver um conexão de um cluster configurada. Agora para efetuar o acesso ao cluster digite:
+As informações referente aos clusters que sua máquina está configurada para conectar-se são encontradas no arquivo **~/.kube/config**, lembrando que este arquivo irá existir somente se houver alguma conexão configurada. No casos estas informações podem ser acessadas por meio do **kubectl**, por exemplo para visualizar todos os clusters configurados
 
 ```sh
+kubectl config get-clusters
+```
+
+E conseguir acessar um cluster
+
+```sh
+# Lembrando que "kind-kind" é o nome do contexto
 kubectl cluster-info --context kind-kind
+```
+
+Outra forma para mudar de contexto
+
+```sh
+# Lembrando que "kind-fullcycle" é o nome do contexto
+kubectl config use-context kind-fullcycle
 ```
 
 Para verificamos se estamos conectados o comando abaixo deve retornar um ou mais nodes
@@ -59,9 +73,14 @@ kubectl get nodes
 Contudo caso, sejá necessário deletar um cluster do kind devemos saber qual o nome do cluster (por padrão, caso não tenha especificado o nome é kind) e posteriormente executar o comando de delete
 
 ```sh
-kind get clusters # Lista todos os clusters criados pelo kind
-kind delete clusters kind # Deleta o cluster com o nome "kind"
+# Lista todos os clusters criados pelo kind
+kind get clusters
+
+# Deleta o cluster com o nome "kind"
+kind delete clusters kind
 ```
+
+**NOTA**: Para facilitar o gerenciamento das conexões do kubernetes pode utilizar a extensão do vscode (kubernetes-tools)[https://marketplace.visualstudio.com/items?itemName=ms-kubernetes-tools.vscode-kubernetes-tools]. **Lembrando, que esta ferramenta gerencia somente as conexões com o kubernetes e não o _kind_ em si**.
 
 # Informações que podem ser utilizadas
 
