@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: "goserver"
+  # Label é uma etiqueta que ajuda a fazer buscas e criar regras
+  labels:
+    app: "goserver-label"
+#Especificação do Pod
+spec:
+  containers:
+    - name: goserver-container
+      image: "vitorat/hello-go:latest"

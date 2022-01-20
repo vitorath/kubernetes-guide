@@ -26,11 +26,11 @@ Um node consiste em uma máquina e cada possui uma quantidade de vCPU e Memória
 
 Uma boa prática é manter um **pod** por **node**, contudo, pode existir situações na qual um **node** tenha mais de um **pod**, embora sejam cenários bem específicos.
 
-# Kind - uma ferramenta para praticar com Kubernetes
+## Kind - uma ferramenta para praticar com Kubernetes
 
 [Kind](https://kind.sigs.k8s.io/docs/user/quick-start) é uma ferramenta que executa localmente clusters de Kubernetes usando "nodes" containers Docker. Contudo, para ter acesso aos clusters que são gerandos pelo **kind** é mais conveniente utilizar o [kubectl](https://kubernetes.io/docs/tasks/tools/) que é client do kuberntes que se comunica com o servidor do kubernetes.
 
-## Criando clusters com o Kind
+### Criando clusters com o Kind
 
 Para criar um cluster com um único **node** utilizando o kind execute o comando:
 
@@ -81,6 +81,36 @@ kind delete clusters kind
 ```
 
 **NOTA**: Para facilitar o gerenciamento das conexões do kubernetes pode utilizar a extensão do vscode (kubernetes-tools)[https://marketplace.visualstudio.com/items?itemName=ms-kubernetes-tools.vscode-kubernetes-tools]. **Lembrando, que esta ferramenta gerencia somente as conexões com o kubernetes e não o _kind_ em si**.
+
+## Pod
+
+**Pod** é um conjunto de um ou mais containers, sendo assim a menor unidade de uma aplicação kubernetes. Contudo o normal é executar somente um container por **pod**. Contudo, um **pod** por si só não será recriado caso ocorra algum erro e ele seja derrubado.
+
+A forma mais comum de criar um **pod** é por meio de um arquivo de configuração, neste caso (k8s/kube-pod.yaml)[./k8s/kube-pod.yaml]. Para aplica-lo utilize o comando **apply** do **kubectl**.
+
+```sh
+# Lembrando que "k8s/kube-pod.yaml" é o caminho até o arquivo de configuração.
+kubectl apply -f k8s/kube-pod.yaml
+```
+
+Após um **pod** ser criado é possível visualiza-lo(s) por meio do comando **get pods** ou **get po**. Caso queira deleta-lo utilize o comando delete
+
+```sh
+kubectl get pods
+kubectl get po
+
+# Lembrando que "goserver" é o nome do pod
+kubectl delete pod goserver
+```
+
+**Note**: Para conseguir visualizar a execução da aplicação (não sendo o ideal) basta fazer um redirecionamento de portas entre a rede local e a do pod no kubernetes
+
+```sh
+# Sendo "/goserver" o nome da aplicação
+# 8000 a porta da rede local (externa ao kubernetes)
+# 80 a porta interna do pod no kubernetes
+kubectl port-forward pod/goserver 8000:80
+```
 
 # Informações que podem ser utilizadas
 
