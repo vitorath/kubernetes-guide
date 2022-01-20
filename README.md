@@ -26,6 +26,10 @@ Um node consiste em uma máquina e cada possui uma quantidade de vCPU e Memória
 
 Uma boa prática é manter um **pod** por **node**, contudo, pode existir situações na qual um **node** tenha mais de um **pod**, embora sejam cenários bem específicos.
 
+# Kind - uma ferramenta para praticar com Kubernetes
+
+[Kind](https://kind.sigs.k8s.io/docs/user/quick-start) é uma ferramenta que executa localmente clusters de Kubernetes usando "nodes" containers Docker. Contudo, para ter acesso aos clusters que são gerandos pelo **kind** é mais conveniente utilizar o [kubectl](https://kubernetes.io/docs/tasks/tools/) que é client do kuberntes que se comunica com o servidor do kubernetes.
+
 # Informações que podem ser utilizadas
 
 Borg > Omega > Kubernetes (Antecessores do kubernetes - Pesquisar depois por curiosidade)
