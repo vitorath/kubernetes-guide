@@ -140,12 +140,36 @@ Um **Deployment** fornece atualizações declarativas para os **Pods** e os **Re
 kubectl apply -f k8s/kube-deployment.yaml
 ```
 
+## Rollout
+
+**Rollout** consiste na mudança de versões de objetos já criados. Por exemplo para voltar à versão anterior do **deployment**
+
+```sh
+# Sendo "deployment" o objeto e "goserver-deployment" o nome
+kubectl rollout undo deployment goserver-deployment
+```
+
+Agora para voltar à uma versão específica
+
+```sh
+# Sendo "deployment" o objeto e "goserver-deployment" o nome e "2" o número da revisãO
+kubectl rollout undo deployment goserver-deployment --to-revision=2
+```
+
+Para verificar o histórico de rolluot e obter o número da revisão
+
+```sh
+# Sendo "deployment" o objeto e "goserver-deployment"
+kubectl rollout history deployment goserver-deployment
+```
+
 # Informações que podem ser utilizadas
 
 Deployment > ReplicaSet > Pod
 
 Borg > Omega > Kubernetes (Antecessores do kubernetes - Pesquisar depois por curiosidade)
 kubectl describe pod <nome-pod>
+kubectl describe deployment <nome-deployment>
 
 ## Referências
 
