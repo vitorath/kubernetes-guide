@@ -184,7 +184,7 @@ kubectl get svc # Abreviação
 
 ### ClusterIP
 
-Consiste em mapear um ip interno para expor o service a um host externo. Embora que com o **kind** não seja exposto automaticamente, em um ambiente de cloud preparado já é exposto automaticamente.
+Consiste em mapear um ip interno para acessar o service.
 
 Configurando uma aplicação que está sendo executada na porta 8000 (**targetPort**) e exposta no serivce pela porta 80 (**port**), além de forçar o acesso externo na porta 9000. Em resumo, o usuário acessa a porta 9000 que é redirecionada para a porta 80 que posteriomente acessa a porta 8000.
 
@@ -205,6 +205,17 @@ Neste exemplo, o serviço está exposto na porta 30001 (**nodePort**) que acessa
 kubectl apply -f k8s/kube-service-node-port.yaml
 ```
 
+### LoadBalancer
+
+LoadBalancer tem como propósito disponibilizar o acesso externo para á suas aplicações no kubernetes, gerando uma IP e uma porta externa automaticamente.
+
+Normalmente este serviço é utilizado é um cluster gerenciado, isto é, em um provedor de nuvem.
+Gera um Ip para ser acessado externamente almem de gerar um porta externa. Normalmente utilizado quando está sendo executado em um cluster gerenciado, isto é, um provedor de nuvem. Contudo com o **kind** a porta externa fica como pendente, pois normalmente sua máquina não está configurado todos os drivers de nuvem necessário para se auto configurar.
+
+```sh
+kubectl apply -f k8s/kube-service-load-balancer.yaml
+```
+
 # Informações que podem ser utilizadas
 
 Deployment > ReplicaSet > Pod
@@ -212,6 +223,8 @@ Deployment > ReplicaSet > Pod
 Borg > Omega > Kubernetes (Antecessores do kubernetes - Pesquisar depois por curiosidade)
 kubectl describe pod <nome-pod>
 kubectl describe deployment <nome-deployment>
+
+kubectl delete svc <nome-service>
 
 ## Referências
 
