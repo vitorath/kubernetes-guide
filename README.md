@@ -193,6 +193,18 @@ kubectl apply -f k8s/kube-service-cluster-ip.yaml
 kubectl port-forward svc/goserver-service 9000:80
 ```
 
+### NodePorts
+
+NodePort é a forma mais arcaica para acessar um cluster kubernetes de forma externa. Neste serviço o kuberntes libera a mesma porta para todos os **nodes** do cluster. Além disso, a porta exposta deve estar entre 30000 e 32767.
+
+Normalmente utilizado para quando for configurar o próprio **loadBalancer** ou ainda expor uma porta temporariamente.
+
+Neste exemplo, o serviço está exposto na porta 30001 (**nodePort**) que acessa a porta 80(**Service**) que redireciona para a porta 8000 (**targetPort**).
+
+```sh
+kubectl apply -f k8s/kube-service-node-port.yaml
+```
+
 # Informações que podem ser utilizadas
 
 Deployment > ReplicaSet > Pod
