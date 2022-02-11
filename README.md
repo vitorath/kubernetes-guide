@@ -82,6 +82,14 @@ kind delete clusters kind
 
 **NOTA**: Para facilitar o gerenciamento das conexões do kubernetes pode utilizar a extensão do vscode (kubernetes-tools)[https://marketplace.visualstudio.com/items?itemName=ms-kubernetes-tools.vscode-kubernetes-tools]. **Lembrando, que esta ferramenta gerencia somente as conexões com o kubernetes e não o _kind_ em si**.
 
+## Acessando API's interna no Kubernetes
+
+A fim de curiosidade para visualizar todas as api's do kubernetes
+
+```sh
+kubectl proxy --port=8080 # No caso foi exposto na porta 8080, mas poderia ser outra
+```
+
 ## Pod
 
 **Pod** é um conjunto de um ou mais containers, sendo assim a menor unidade de uma aplicação kubernetes. Contudo o normal é executar somente um container por **pod**. Contudo, um **pod** por si só não será recriado caso ocorra algum erro e ele seja derrubado.
