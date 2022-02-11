@@ -163,6 +163,28 @@ Para verificar o histórico de rolluot e obter o número da revisão
 kubectl rollout history deployment goserver-deployment
 ```
 
+## Service
+
+Service tem como proprósito de expor sua aplicação automaticamente e já aplicando a um processo de service discovery.
+
+Para listar todos os services
+
+```sh
+kubectl get service
+kubectl get svc # Abreviação
+```
+
+### ClusterIP
+
+Consiste em mapear um ip interno para expor o service a um host externo. Embora que com o **kind** não seja exposto automaticamente, em um ambiente de cloud preparado já é exposto automaticamente.
+
+Configurando uma aplicação que está sendo executada na porta 8000 (**targetPort**) e exposta no serivce pela porta 80 (**port**), além de forçar o acesso externo na porta 9000. Em resumo, o usuário acessa a porta 9000 que é redirecionada para a porta 80 que posteriomente acessa a porta 8000.
+
+```sh
+kubectl apply -f k8s/kube-service-cluster-ip.yaml
+kubectl port-forward svc/goserver-service 9000:80
+```
+
 # Informações que podem ser utilizadas
 
 Deployment > ReplicaSet > Pod

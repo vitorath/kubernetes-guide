@@ -1,0 +1,18 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: goserver-service
+spec:
+  # Responsável por filtrar todos os pods que vão estar incorporados neste serviço
+  selector:
+    app: goserver-pod-label
+  type: ClusterIP
+  ports:
+  - name: goserver-portservice
+  # Caso especifique somente a "port" o "targetPort" é igual a "port"
+    port: 80 # Porta expõe o service internamente na aplicação
+    targetPort: 8000 # Porta da aplicação contida no pod
+    protocol: TCP
+
+
+    

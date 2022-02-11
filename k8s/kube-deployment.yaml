@@ -19,4 +19,4 @@ spec:
     spec:
       containers:
         - name: goserver-container
-          image: "vitorat/hello-go:latest"
+          image: "vitorat/hello-go:1.0"
