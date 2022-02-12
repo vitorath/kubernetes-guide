@@ -216,6 +216,16 @@ Gera um Ip para ser acessado externamente almem de gerar um porta externa. Norma
 kubectl apply -f k8s/kube-service-load-balancer.yaml
 ```
 
+## Objetos de Configuração
+
+Objetos para configurar dinamicamente os ambientes, além de possibilitar trabalhar com dados sensíveis.
+
+Exemplo de como aplicar variável de ambiente
+
+```sh
+kubectl apply -f k8s/kube-deployment-env.yaml
+```
+
 # Informações que podem ser utilizadas
 
 Deployment > ReplicaSet > Pod
