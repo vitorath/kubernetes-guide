@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: goserver-deployment
+  labels:
+    app: goserver-deployment-label
+spec:
+  # Seleciona as labels dos pods
+  selector:
+    matchLabels:
+      app: goserver-pod-label
+  replicas: 1
+  # Especificação de um Pod
+  template:
+    metadata:
+      name: "goserver"
+      labels:
+        app: "goserver-pod-label"
+    spec:
+      containers:
+        - name: goserver-container
+          image: "vitorat/hello-go:2.0"
+          # Lê todas as variáveis de armbiente configuradas
+          envFrom:
+            - configMapRef:
+                name: goserver-env
+          # Expecifíca individualmente cada variável de ambiente configurada no configmap
+          # env:
+          #   - name: NAME
+          #     valueFrom:
+          #       configMapKeyRef:
+          #         name: goserver-env
+          #         key: NAME
+          #   - name: AGE
+          #     valueFrom:
+          #       configMapKeyRef:
+          #         name: goserver-env
+          #         key: AGE

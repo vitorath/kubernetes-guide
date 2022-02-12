@@ -220,10 +220,17 @@ kubectl apply -f k8s/kube-service-load-balancer.yaml
 
 Objetos para configurar dinamicamente os ambientes, além de possibilitar trabalhar com dados sensíveis.
 
-Exemplo de como aplicar variável de ambiente
+Exemplo de como aplicar variável de ambiente diretamente ao container do deployment
 
 ```sh
 kubectl apply -f k8s/kube-deployment-env.yaml
+```
+
+Outra forma de utilizar variáveis de ambiente é configurando um objeto **ConfigMap**, nele é possível agrupar as variáveis de ambiente de sua aplicação. Contudo, para aplicar as mudanças feitas neste arquivo é necessário executar novamente o **deployment** para ser efetiva a mudança nos containers
+
+```sh
+kubectl apply -f k8s/kube-configmap-env.yaml # Aplicando configmap
+kubectl apply -f k8s/kube-deployment-env-configmap.yaml # Executando o deployment.
 ```
 
 # Informações que podem ser utilizadas
