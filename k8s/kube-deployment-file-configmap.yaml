@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: goserver-deployment
+  labels:
+    app: goserver-deployment-label
+spec:
+  # Seleciona as labels dos pods
+  selector:
+    matchLabels:
+      app: goserver-pod-label
+  replicas: 1
+  # Especificação de um Pod
+  template:
+    metadata:
+      name: "goserver"
+      labels:
+        app: "goserver-pod-label"
+    spec:
+      containers:
+        - name: goserver-container
+          image: "vitorat/hello-go:3.0"
+          envFrom:
+            - configMapRef:
+                name: goserver-env
+          # Monta um volume declarado
+          volumeMounts:
+            - mountPath: "go/myfamily"
+              name: config-volume
+              readOnly: true # Possibilitar somente o modo de leitura do arquivo
+
+      # Criar um volume com base em um configMap
+      volumes:
+        - name: config-volume
+          configMap:
+            name: configmap-family
+            items:
+              - key: members
+                path: "family.txt"

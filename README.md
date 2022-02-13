@@ -216,21 +216,35 @@ Gera um Ip para ser acessado externamente almem de gerar um porta externa. Norma
 kubectl apply -f k8s/kube-service-load-balancer.yaml
 ```
 
-## Objetos de Configuração
+## Variáveis de ambiente
 
-Objetos para configurar dinamicamente os ambientes, além de possibilitar trabalhar com dados sensíveis.
-
-Exemplo de como aplicar variável de ambiente diretamente ao container do deployment
+Para adicionar variáveis de ambiente em sua aplicação, de uma forma simplificada, adicione diretamente a variável em um **pod**, conforme desmontrado no abaixo.
 
 ```sh
 kubectl apply -f k8s/kube-deployment-env.yaml
 ```
 
-Outra forma de utilizar variáveis de ambiente é configurando um objeto **ConfigMap**, nele é possível agrupar as variáveis de ambiente de sua aplicação. Contudo, para aplicar as mudanças feitas neste arquivo é necessário executar novamente o **deployment** para ser efetiva a mudança nos containers
+Contudo existe uma forma mais interessante de fazer a mesma configuração e está consiste em utilizar um objeto de configuração denominado **ConfigMap**.
+
+O **ConfigMap** é um objeto de configuração que pode ser utilizado em um pod. Uma das formas que este pode ser utilizado é para configurar variáveis de ambiente.
 
 ```sh
 kubectl apply -f k8s/kube-configmap-env.yaml # Aplicando configmap
 kubectl apply -f k8s/kube-deployment-env-configmap.yaml # Executando o deployment.
+```
+
+**Ps.:** as mudanças de fato serão efetivadas somente quando atualizar o **deployment**, caso modifique e atualize **somente o ConfigMap** as alterações **não serão aplicadas**.
+
+## Criando arquivos com ConfigMap
+
+Atém de configurar variáveis de ambiente, com o **ConfigMap** também é possível utiliza-lo para criar arquivos utilizados por sua aplicação. Neste cenário é necessário configurar um **volume** no qual o **kubernetes** irá aplicar as configurações do **ConfigMap** e gerar um arquivo.
+
+é possível utilizar uma arquivo configMap como um arquivo físico
+pega um configmap e transforma em voluma
+
+```sh
+kubectl apply -f k8s/kube-configmap-family-file.yaml # ConfigMap que simula um arquivo
+kubectl apply -f k8s/kube-deployment-file-configmap.yaml # Aplicar configurações à aplicação
 ```
 
 # Informações que podem ser utilizadas
@@ -242,6 +256,9 @@ kubectl describe pod <nome-pod>
 kubectl describe deployment <nome-deployment>
 
 kubectl delete svc <nome-service>
+
+kubectl exec -t <nome-pod> -- <comando>
+kubectl logs <nome-pod>
 
 ## Referências
 
