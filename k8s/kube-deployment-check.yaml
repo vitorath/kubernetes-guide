@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: goserver-deployment
+  labels:
+    app: goserver-deployment-label
+spec:
+  selector:
+    matchLabels:
+      app: goserver-pod-label
+  replicas: 2
+  template:
+    metadata:
+      name: "goserver"
+      labels:
+        app: "goserver-pod-label"
+    spec:
+      containers:
+        - name: goserver-container
+          image: "vitorat/hello-go:5.0"
+          
+          livenessProbe:
+            # Verificação pode ser por meio de uma requisição Http, executando um Command  ou ainda por requisição TCP
+            httpGet:
+              path: /healthz
+              port: 8000 # Porta do container
+            periodSeconds: 5 # Intervalo em segundos que irá ser executado o check
+            failureThreshold: 1 # Quantidade de falhar antes de reiniciar o container
+            timeoutSeconds: 10 # Tempo em limite em segundos para executar a requisição
+            successThreshold: 1 # Quantidade de repetições (sucessos) para garantir que de fato o serviço está de pé

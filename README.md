@@ -251,6 +251,23 @@ kubectl apply -f k8s/kube-deployment-file-configmap.yaml # Aplicar configuraçõ
 
 As configurações de **secrets** devem ser encriptografadas em Base64. Posteriormente as secretes são configuradas como variáveis de ambiente do **container**.
 
+## Probes
+
+**Health check** é uma forma para identificar se uma aplicação está funcionando corretamente ou não. O **kubernetes** contempla com uma implementação nativa denomidade **Liveness Probe** que verifica de tempos em tempos a aplicação, desde que seja configurado, caso ocorra alguma problema o **kubernetes** automaticamente reinicia o **pod**.
+
+**Obs.:** Ao utilizar o **Liveness Probe**, considere configura o timeout da requisição devidamente, pois caso esteja fazendo algum **check integrado**(verificando banco por exemplo) considere o tempo que a aplicação demora para fazer todos estes processos.
+
+### Heath Check 
+Mecanismo que verifica de tempos em tempos a aplicação para verificar se está funcionando corretamente, no caso do kubernetes normalemnte reinicia o container.
+
+Redirecionar o trafego somente quando a aplicação for inicializada
+
+### Liveness probe
+Verifica de tempos em tempos para verificar a saude da aplicação
+
+Normalente o timeout configurado é um segundo
+Contudo caso queira fazer um teste mais integrado, vale a pena fazer um healthz somente para isto e aumente o timeout
+
 # Informações que podem ser utilizadas
 
 Deployment > ReplicaSet > Pod
@@ -263,6 +280,10 @@ kubectl delete svc <nome-service>
 
 kubectl exec -t <nome-pod> -- <comando>
 kubectl logs <nome-pod>
+
+
+➜ kubectl apply -f k8s/kube-deployment-check.yaml && watch -n1 kubectl get po
+
 
 ## Referências
 
