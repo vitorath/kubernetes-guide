@@ -247,6 +247,10 @@ kubectl apply -f k8s/kube-configmap-family-file.yaml # ConfigMap que simula um a
 kubectl apply -f k8s/kube-deployment-file-configmap.yaml # Aplicar configurações à aplicação
 ```
 
+###  Secrets
+
+As configurações de **secrets** devem ser encriptografadas em Base64. Posteriormente as secretes são configuradas como variáveis de ambiente do **container**.
+
 # Informações que podem ser utilizadas
 
 Deployment > ReplicaSet > Pod

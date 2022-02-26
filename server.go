@@ -9,6 +9,7 @@ import (
 )
 
 func main() {
+	http.HandleFunc("/secret", Secret)
 	http.HandleFunc("/env", HelloEnv)
 	http.HandleFunc("/config-map", ConfigMap)
 	http.HandleFunc("/", Hello)
@@ -33,4 +34,11 @@ func ConfigMap(w http.ResponseWriter, r *http.Request) {
 	}
 
 	fmt.Fprintf(w, "My Family file: %s.", string(data))
+}
+
+func Secret(w http.ResponseWriter, r *http.Request) {
+	user := os.Getenv("USER")
+	password := os.Getenv("PASSWORD")
+
+	fmt.Fprintf(w, "User: %s. Password: %s.", user, password)
 }
