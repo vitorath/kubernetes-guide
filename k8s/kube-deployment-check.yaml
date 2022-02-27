@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: goserver-container
-          image: "vitorat/hello-go:5.0"
+          image: "vitorat/hello-go:5.1"
           
           livenessProbe:
             # Verificação pode ser por meio de uma requisição Http, executando um Command  ou ainda por requisição TCP
@@ -26,5 +26,17 @@ spec:
               port: 8000 # Porta do container
             periodSeconds: 5 # Intervalo em segundos que irá ser executado o check
             failureThreshold: 1 # Quantidade de falhar antes de reiniciar o container
-            timeoutSeconds: 10 # Tempo em limite em segundos para executar a requisição
+            timeoutSeconds: 1 # Tempo em limite em segundos para executar a requisição
             successThreshold: 1 # Quantidade de repetições (sucessos) para garantir que de fato o serviço está de pé
+            initialDelaySeconds: 15 # Começa a verificar após N segundos
+
+          readinessProbe:
+            # Verificação pode ser por meio de uma requisição Http, executando um Command  ou ainda por requisição TCP
+            httpGet:
+              path: /healthz
+              port: 8000 # Porta do container
+            periodSeconds: 3 # Intervalo em segundos que irá ser executado o check
+            failureThreshold: 1 # Quantidade de falhar antes de reiniciar o container
+            timeoutSeconds: 1 # Tempo em limite em segundos para executar a requisição
+            successThreshold: 1 # Quantidade de repetições (sucessos) para garantir que de fato o serviço está de pé
+            initialDelaySeconds: 10 # Começa a verificar após N segundos

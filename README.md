@@ -255,7 +255,9 @@ As configurações de **secrets** devem ser encriptografadas em Base64. Posterio
 
 **Health check** é uma forma para identificar se uma aplicação está funcionando corretamente ou não. O **kubernetes** contempla com uma implementação nativa denomidade **Liveness Probe** que verifica de tempos em tempos a aplicação, desde que seja configurado, caso ocorra alguma problema o **kubernetes** automaticamente reinicia o **pod**.
 
-**Obs.:** Ao utilizar o **Liveness Probe**, considere configura o timeout da requisição devidamente, pois caso esteja fazendo algum **check integrado**(verificando banco por exemplo) considere o tempo que a aplicação demora para fazer todos estes processos.
+Por outro lado, além de validar se a aplicação está funcionando é comum desviar o fluxo de dados daquele container que está com problema o mais rápido possível, pois dependendo a aplicação pode ocasionar um grande prejuizo para empresa. Para este propósito existe o **Readiness Probe** que tem como objetivo verificar se a aplicação está funcionado e consequentemente se houver algum problema irá derrubar a aplicação.
+
+**Obs.:** Ao utilizar o **Liveness Probe**, considere configura o timeout da requisição devidamente, pois caso esteja fazendo algum **check integrado**(verificando banco por exemplo) considere o tempo que a aplicação demora para fazer todos estes processos. Além disso, é muito importante que o **Liveness Probe** e o **Readiness Probe** esteja perfeitamente sincronizados para não ocasionar um loop na criação dos containers e com isso a aplicação nunca estara funcionando.
 
 ### Heath Check 
 Mecanismo que verifica de tempos em tempos a aplicação para verificar se está funcionando corretamente, no caso do kubernetes normalemnte reinicia o container.
