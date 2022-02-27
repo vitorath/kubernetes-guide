@@ -259,16 +259,8 @@ Por outro lado, além de validar se a aplicação está funcionando é comum des
 
 **Obs.:** Ao utilizar o **Liveness Probe**, considere configura o timeout da requisição devidamente, pois caso esteja fazendo algum **check integrado**(verificando banco por exemplo) considere o tempo que a aplicação demora para fazer todos estes processos. Além disso, é muito importante que o **Liveness Probe** e o **Readiness Probe** esteja perfeitamente sincronizados para não ocasionar um loop na criação dos containers e com isso a aplicação nunca estara funcionando.
 
-### Heath Check 
-Mecanismo que verifica de tempos em tempos a aplicação para verificar se está funcionando corretamente, no caso do kubernetes normalemnte reinicia o container.
+Uma possível alternativa para sincronizar a inicialização é configurando o **Startup Probe** (a partir da versão 1.16). Este probe tem como propósito verificar a primeira inicialização do container seja quando executar a configuração pela primeira vez ou após o container ser reiniciado e consequentemente inicializado. Após o **Startup Probe** e sua aplicação iniciar com sucesso é iniciado os processos de execução do **Liveness Probe** e do **Readiness Probe**.
 
-Redirecionar o trafego somente quando a aplicação for inicializada
-
-### Liveness probe
-Verifica de tempos em tempos para verificar a saude da aplicação
-
-Normalente o timeout configurado é um segundo
-Contudo caso queira fazer um teste mais integrado, vale a pena fazer um healthz somente para isto e aumente o timeout
 
 # Informações que podem ser utilizadas
 

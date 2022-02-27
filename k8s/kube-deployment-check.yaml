@@ -19,16 +19,14 @@ spec:
         - name: goserver-container
           image: "vitorat/hello-go:5.1"
           
-          livenessProbe:
+          startupProbe:
             # Verificação pode ser por meio de uma requisição Http, executando um Command  ou ainda por requisição TCP
             httpGet:
               path: /healthz
               port: 8000 # Porta do container
+            #Esta configuração irá tentar para no máximo 150 segundos
             periodSeconds: 5 # Intervalo em segundos que irá ser executado o check
-            failureThreshold: 1 # Quantidade de falhar antes de reiniciar o container
-            timeoutSeconds: 1 # Tempo em limite em segundos para executar a requisição
-            successThreshold: 1 # Quantidade de repetições (sucessos) para garantir que de fato o serviço está de pé
-            initialDelaySeconds: 15 # Começa a verificar após N segundos
+            failureThreshold: 30 # Quantidade de falhar antes de reiniciar o container
 
           readinessProbe:
             # Verificação pode ser por meio de uma requisição Http, executando um Command  ou ainda por requisição TCP
@@ -39,4 +37,15 @@ spec:
             failureThreshold: 1 # Quantidade de falhar antes de reiniciar o container
             timeoutSeconds: 1 # Tempo em limite em segundos para executar a requisição
             successThreshold: 1 # Quantidade de repetições (sucessos) para garantir que de fato o serviço está de pé
-            initialDelaySeconds: 10 # Começa a verificar após N segundos
+            # initialDelaySeconds: 10 # Começa a verificar após N segundos
+
+          livenessProbe:
+            # Verificação pode ser por meio de uma requisição Http, executando um Command  ou ainda por requisição TCP
+            httpGet:
+              path: /healthz
+              port: 8000 # Porta do container
+            periodSeconds: 5 # Intervalo em segundos que irá ser executado o check
+            failureThreshold: 1 # Quantidade de falhar antes de reiniciar o container
+            timeoutSeconds: 1 # Tempo em limite em segundos para executar a requisição
+            successThreshold: 1 # Quantidade de repetições (sucessos) para garantir que de fato o serviço está de pé
+            # initialDelaySeconds: 15 # Começa a verificar após N segundos
