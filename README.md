@@ -261,6 +261,65 @@ Por outro lado, além de validar se a aplicação está funcionando é comum des
 
 Uma possível alternativa para sincronizar a inicialização é configurando o **Startup Probe** (a partir da versão 1.16). Este probe tem como propósito verificar a primeira inicialização do container seja quando executar a configuração pela primeira vez ou após o container ser reiniciado e consequentemente inicializado. Após o **Startup Probe** e sua aplicação iniciar com sucesso é iniciado os processos de execução do **Liveness Probe** e do **Readiness Probe**.
 
+# Resources e HPA
+
+Uma das coisas mais importantes para o gerenciamento de containers é a possibilidade de **autoscaling**, isto é, escalar automaticamente as instancias de acordo com a quantidade de recursos disponíveis, para isto p kubernetes tem **HPA (Horizontal Pods Autoscaling)**.
+
+O HPA, por padŗão utiliza a CPU como métrica para identificar se irá escalar ou não, mas é possível configura-lo de acordo com a necessidade. Contudo, é necessário configurar os limites de recursos que um pod poderá consumir e caso os recursos disponíveis sejam insuficientes para executar o pod, ele ficar pendente. Os recursos que podem ser configurados são:
+- CPU: quantidade de milicores ou share de cpu, sendo 1000m um núcleo, ou ainda é possível configurar utilizando porcentagem.
+- Memória: quantidade de memória que poderá utilizar.
+
+Obs.: Caso não limite os recursos os pods irão consumir tudo o que estiver disponível.
+
+Exemplo de configurado os resources:
+```sh
+kubectl apply -f k8s/kube-deployment-resources.yaml
+kubectl top pod <pod-id> # Verificar consumo de recursos de um pod
+```
+
+Exemplo de configuração do HPA:
+```sh
+kubectl apply -f k8s/kube-hpa.yaml
+ kubectl get hpa # Visualizar os hpa's configurados
+```
+
+## Metrics Server
+
+O **Metrics Server** é o serviço que o kubernetes utiliza para coletar métricas referente ao consumo dos serviços. Além disso, é possível configura-lo para enviar os logs a um Prometheus por exemplo, possibilitando visibilidade e manipular a informação conforme a necessidade.
+
+Por padrão este serviço já vem configurado nos servidores em cloud, contudo, utilizando o **kind** (para desenvolvimento) é necessário adiciona-lo e para isso utilize: 
+```sh
+# Este possívelmente terá problemas de tls
+kubectl apply -f https://github.com/kubernetes-sigs/metrics-server/releases/latest/download/high-availability.yaml
+# Logo, utilize este (o mesmo arquivo con tls habilitado)
+kubectl apply -f k8s/kube-metrics-server-kind.yaml
+```
+
+Listar todos os serviços contidos no kubernetes:
+```sh
+kubectl get apiservices
+```
+
+## Testes de estresse com Fortio
+
+O (Fortio)[https://github.com/fortio/fortio] é uma ferramenta que possibilita simular multiplos acessos a uma API. Outra possibilidade é o (K6)[https://k6.io/]
+
+Executando o Fortio como um container:
+```sh
+# Versṍes abaixo da 1.21
+kubectl run -it --generator=run-pod/v1 fortio --rm --image=fortio/fortio -- load -qps 800 -t 120s -c 70 "http://goserver-service/healthz"
+
+# Versṍes acima ou igual à 1.21
+kubectl run -it fortio --rm --image=fortio/fortio -- load -qps 800 -t 120s -c 70 "http://goserver-service/healthz"
+
+# Monitorar consumo de recursos
+watch -n1 kubectl get hpa
+```
+
+## Recomendações
+
+- Normalmente as métricas de CPU utilizadas no HPA por padrão são suficientes para a maioria das aplicações.
+- Trabalhe, no mímimo, com mais de uma replica
 
 # Informações que podem ser utilizadas
 
